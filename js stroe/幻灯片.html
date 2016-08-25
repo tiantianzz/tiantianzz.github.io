@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<title>网易幻灯片</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+#box{width:600px; height:400px; margin:100px auto; position:relative; top:0; left:0; overflow:hidden;}
+#box ul{position:absolute; top:0; left:0; width:2400px; height:400px;}
+#box ul li{width:600px; height:400px; float:left; text-align:center; line-height:400px; font-size:50px;}
+#box ol{position:absolute; bottom:40px; left:50%; width:400px; height:20px; margin-left:-200px;}
+#box ol li{width:80px; height:20px; background:#ccc; margin:10px; float:left; position:relative;}
+#box ol li span{ position:absolute; width:0; height:20px; background:#F30;}
+</style>
+<script src="../js/move.js"></script>
+<script>
+window.onload=function(){
+	var oBox = document.getElementById('box');
+	var oUl = oBox.children[0];
+	var oOl = oBox.children[1];
+	var aLi = oUl.children;
+	var aS = oOl.getElementsByTagName('span');
+	var iNow = 0;
+	function next(){
+		for(var i=0;i<aS.length;i++){				//清除所有width
+			aS[i].style.width = 0;
+		}
+		move(aS[iNow],{width:80},{easing:Tween.Cubic.easeInOut,duration:800,complete:function(){		/*aS[i]的运动*/
+			iNow++;
+			if(iNow==aLi.length){
+				iNow = 0;
+			}
+			move(oUl,{left:-iNow*aLi[0].offsetWidth},{complete:function(){		/*oUl的运动*/
+				next();
+			}});
+		}});
+	}
+	next();
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+	<ul>
+		<li style="background:#f90;"></li>
+		<li style="background:#399;"></li>
+		<li style="background:#f33;"></li>
+		<li style="background:#33f;"></li>
+	</ul>
+	<ol>
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+		<li><span></span></li>
+	</ol>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+

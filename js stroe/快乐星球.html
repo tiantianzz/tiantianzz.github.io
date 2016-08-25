@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{ margin:0; padding:0; list-style:none; font-family: "微软雅黑","张海山锐线体简"}
+#box{background:url(ball/bg.jpg) no-repeat;-webkit-background-size:100% 100%;-ms-background-size:100% 100%;background-size:100% 100%;}
+#box div{width:100px;height:100px;position: absolute; border-radius:50%;}
+</style>
+<script>
+function rnd(n,m){
+	return Math.random()*(m-n)+n;
+};
+window.onload=function(){
+	var oBox=document.getElementById('box');
+	var aDiv=oBox.children;
+	var H=document.documentElement.clientHeight;
+	var W=document.documentElement.clientWidth;
+	oBox.style.width=W+'px';
+	oBox.style.height=H+'px';
+	for(var i=0;i<aDiv.length;i++){
+		aDiv[i].style.left=rnd(0,(document.documentElement.clientWidth-100))+'px';
+		aDiv[i].style.top=rnd(0,(document.documentElement.clientHeight-200))+'px';
+		aDiv[i].style.background='url(ball/xingqiu'+(i+1)+'.png) no-repeat';		
+		drag(aDiv[i]);
+	}
+	
+	function drag(obj){
+		obj.onmousedown=function(ev){
+			var lastX=0;
+			var lastY=0;
+			var speedX=0;
+			var speedY=0;
+			var ev=ev||event;
+			var disX=ev.clientX-obj.offsetLeft;
+			var disY=ev.clientY-obj.offsetTop;
+			document.onmousemove=function(ev){
+				var ev=ev||event;
+				obj.style.left=ev.clientX-disX+'px';
+				obj.style.top=ev.clientY-disY+'px';
+				speedX=ev.clientX-lastX;
+				speedY=ev.clientY-lastY;
+				lastX=ev.clientX;
+				lastY=ev.clientY;				
+			};
+			document.onmouseup=function(){
+				move(obj,speedX,speedY);
+				document.onmousemove=document.onmouseup=null;
+				obj.releaseCapture&&obj.releaseCapture();
+			};
+			obj.setCapture&&obj.setCapture();
+			return false;
+		};
+	};
+
+	function move(obj,speedX,speedY){
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function(){
+			speedY+=3;
+			var l=obj.offsetLeft+speedX;
+			var t=obj.offsetTop+speedY;
+			if(t>document.documentElement.clientHeight-obj.offsetHeight){
+				t=document.documentElement.clientHeight-obj.offsetHeight;
+				speedY*=-0.8;
+				speedX*=0.8;
+			}else if(t<0){
+				t=0;
+				speedY*=-0.8;
+				speedX*=0.8;
+			}
+			if(l>document.documentElement.clientWidth-obj.offsetWidth){
+				l=document.documentElement.clientWidth-obj.offsetWidth
+				speedX*=-0.8;
+				speedY*=0.8;
+			}else if(l<0){
+				l=0;
+				speedX*=-0.8;
+				speedY*=0.8;
+			}
+			obj.style.left=l+'px';
+			obj.style.top=t+'px';
+			if(Math.abs(speedX)<1) speedX=0;
+			if(Math.abs(speedY)<1) speedY=0;
+			if(speedX==0&&speedY==0&&t==document.documentElement.clientHeight-obj.offsetHeight){
+				clearInterval(obj.timer);
+			}
+		},30);
+	};
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+	<div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+</body>
+</html>

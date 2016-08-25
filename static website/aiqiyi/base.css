@@ -1,0 +1,9 @@
+@charset "utf-8";
+/* CSS Document */
+h1,h2,h3,h4,h5,h6,p,strong,em,ul,input,li,b,i,ol,dl,dd,body{margin:0;padding:0;color:#000;font:16px "宋体";list-style:none;outline:none;}
+a{color:#000;text-decoration:none;}
+img{display:block;}
+.clearfix{zoom:1;}
+.clearfix:after{ content:""; clear:both; display:block;}
+.fl { float: left;}
+.fr { float: right;}

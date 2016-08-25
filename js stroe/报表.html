@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body{ background:#000;}
+#c1{ background:#fff;margin:0 auto;display:block;}
+#c2{ background:#fff;margin:0 auto;display:block;}
+</style>
+<script>
+function d2a(n){
+	return n*Math.PI/180;	
+}
+window.onload = function(){
+	var oC1 = document.getElementById("c1");
+	var oC2 = document.getElementById("c2");
+	var gd1 = oC1.getContext("2d");	
+	var gd2 = oC2.getContext("2d");
+	var arr1 = [100,200,400,280,180];
+	var iMax = Math.max.call(null,100,200,400,280,180);
+	var space=oC1.width/(arr1.length*4-1);
+	var w=3*space;
+	var arr2=[];
+	for(var i=0;i<arr1.length;i++){
+		arr2.push(arr1[i]/iMax*oC1.height);
+	}
+	for(var i=0;i<arr2.length;i++){
+		var r = parseInt(Math.random()*256);
+		var g = parseInt(Math.random()*256);
+		var b = parseInt(Math.random()*256);		
+		gd1.fillStyle = "rgb("+r+","+g+","+b+")";
+		gd1.fillRect(i*(space+w),oC1.height-arr2[i],w,arr2[i]);
+		gd1.strokeRect(i*(space+w),oC1.height-arr2[i],w,arr2[i]);
+	}
+	
+	var w=oC2.width;
+	var h=oC2.height;
+	var cx = w/2;
+	var cy = h/2;
+	var r  = 100;
+	var arr3= [100,200,280,500,320];	
+	var sum = arr3.reduce(function(n1,n2){
+		return n1 + n2;
+	});	
+	var aPie = [];
+	arr3.forEach(function(n){
+		aPie.push(n/sum*360);
+	});	
+	//画饼
+	var d = 0;
+	aPie.forEach(function(n){
+		gd2.beginPath();
+		gd2.moveTo(cx,cy);
+		gd2.arc(cx,cy,r,d2a(d),d2a(d+n),false);
+		gd2.closePath();
+		gd2.fillStyle = "rgb("+parseInt(Math.random()*256)+","+parseInt(Math.random()*256)+","+parseInt(Math.random()*256)+")";
+		gd2.fill();
+		d += n;
+	});
+};
+
+</script>
+</head>
+
+<body>
+<canvas id="c1" width="400" height="300"></canvas>
+<canvas id="c2" width="400" height="300"></canvas>
+</body>
+</html>
+

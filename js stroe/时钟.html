@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+.clock p{ position:absolute; left:50%;-webkit-transform-origin:center bottom;transform-origin:center bottom;-ms-transform-origin:center bottom;}
+.clock{ width:300px; height:300px; background:url(img/clock.jpg); margin:100px auto; position:relative;}
+.hours{width:12px; height:80px; background:#000;top:70px; margin-left:-6px; border-radius:50% 50% 0 0;}
+.min{width:8px; height:100px; background:#000;top:50px; margin-left:-4px; border-radius:50% 50% 0 0;}
+.sec{width:4px; height:120px; background:red;top:30px; margin-left:-2px; border-radius:50% 50% 0 0;}
+.step{width:20px; height:20px; background: -webkit-radial-gradient(#fff,#000);background: -ms-radial-gradient(#fff,#000);background:radial-gradient(#fff,#000);
+top:50%;margin-left:-10px;
+margin-top:-10px; border-radius:50%;}
+</style>
+<script>
+window.onload=function(){
+	var oH=document.querySelector('.hours');
+	var oM=document.querySelector('.min');
+	var oS=document.querySelector('.sec');
+	function clock(){
+		var oDate = new Date();
+		var h = oDate.getHours();
+		var m = oDate.getMinutes();
+		var s = oDate.getSeconds();
+		var ms = oDate.getMilliseconds();		
+		oH.style.WebkitTransform = 'rotate('+(h*30+m/60*30)+'deg)';
+		oM.style.WebkitTransform = 'rotate('+(m*6+s/60*6)+'deg)';
+		oS.style.WebkitTransform = 'rotate('+(s*6+ms/1000*6)+'deg)';
+		oH.style.msTransform = 'rotate('+(h*30+m/60*30)+'deg)';
+		oM.style.msTransform = 'rotate('+(m*6+s/60*6)+'deg)';
+		oS.style.msTransform = 'rotate('+(s*6+ms/1000*6)+'deg)';
+		oH.style.transform = 'rotate('+(h*30+m/60*30)+'deg)';
+		oM.style.transform = 'rotate('+(m*6+s/60*6)+'deg)';
+		oS.style.transform = 'rotate('+(s*6+ms/1000*6)+'deg)';
+	}
+	clock();
+	setInterval(clock,30);
+
+};
+</script>
+</head>
+<body>
+<div class="clock">
+    <p class="hours"></p>
+    <p class="min"></p>
+    <p class="sec"></p>
+    <p class="step"></p>
+</div>
+</body>
+</html>

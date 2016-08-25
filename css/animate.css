@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+/*雪花运动*/
+@-webkit-keyframes falling {
+    from { 
+        -webkit-transform: translate(0,0) rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        -webkit-transform: translate(0,1000px) rotateY(360deg) rotateX(360deg);
+    }	
+}
+@-ms-keyframes falling {
+    from { 
+        -ms-transform: translate(0,0) rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        -ms-transform: translate(0,1000px) rotateY(360deg) rotateX(360deg);
+    }	
+}
+@keyframes falling {
+    from { 
+        transform: translate(0,0) rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        transform: translate(0,1000px) rotateY(360deg) rotateX(360deg);
+    }	
+}
+
+/*时钟翻转*/
+@-webkit-keyframes rotate {
+    from { 
+        -webkit-transform:rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        -webkit-transform:rotateY(360deg) rotateX(360deg);
+    }	
+}
+@-ms-keyframes rotate {
+    from { 
+        -ms-transform:rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        -ms-transform:rotateY(360deg) rotateX(360deg);
+    }	
+}
+@keyframes rotate {
+    from { 
+        transform:rotateY(0deg) rotateX(0deg);
+    }
+    to { 
+        transform:rotateY(360deg) rotateX(360deg);
+    }	
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<title>智能社 - www.zhinengshe.com</title>
+<style>
+*{ margin:0; padding:0; list-style:none; font-family: "微软雅黑","张海山锐线体简"}
+#div1{width:200px;height:200px;background:red;position: absolute;left:0;top:0;}
+</style>
+<script src="jsonp.js"></script>
+<script>
+window.onload=function(){
+	//http://v.showji.com/Locating/showji.com2016234999234.aspx?m=18616902220&output=json&callback=show
+	var oT1=document.getElementById('t1');
+	var oBtn=document.getElementById('btn1');
+	oBtn.onclick=function(){
+		jsonp({
+			url:	'http://v.showji.com/Locating/showji.com2016234999234.aspx',
+			data:	{m:oT1.value,output:'json'},
+			cbKey:	'callback',
+			success:function(json){
+				console.log(json);	
+				for(var key in json){
+					var oSpan=document.getElementById(key);
+					if(oSpan){
+						oSpan.innerHTML=json[key];		
+					}
+				}
+			}	
+		});	
+	};	
+};
+</script>
+</head>
+
+<body>
+
+<input type="text" id="t1">
+<input type="button" value="查询" id="btn1">
+
+<li>所查号码：<span id="Mobile"></span></li>
+<li>归属省份：<span id="Province"></span></li>
+<li>归属城市：<span id="City"></span></li>
+<li>城市区号：<span id="AreaCode"></span></li>
+<li>城市邮编：<span id="PostCode"></span></li>
+<li>运 营 商：<span id="TO"></span></li>
+
+
+</body>
+</html>

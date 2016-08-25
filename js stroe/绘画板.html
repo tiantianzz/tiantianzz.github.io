@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="author" content="智能社 - zhinengshe.com" />
+<meta name="copyright" content="智能社 - zhinengshe.com" />
+<title>智能社 - www.zhinengshe.com</title>
+<style>
+body{ background:#000; text-align:center;}
+#c1{ background:#fff;}
+</style>
+<script>
+window.onload = function(){
+	var oC = document.getElementById("c1");
+	var gd = oC.getContext("2d");
+	oC.onmousedown = function(ev){
+		var x = ev.clientX - oC.offsetLeft;
+		var y = ev.clientY - oC.offsetTop;
+		gd.beginPath();
+		gd.moveTo(x,y);
+		
+		document.onmousemove = function(ev){
+			var x = ev.clientX - oC.offsetLeft;
+			var y = ev.clientY - oC.offsetTop;
+			gd.lineTo(x,y);
+			//gd.closePath();
+			gd.stroke();
+		};
+		
+		document.onmouseup = function(){
+			document.onmousemove = null;
+			document.onmouseup = null;	
+		};
+		return false;	
+	}; 
+};
+
+</script>
+</head>
+
+<body>
+<canvas id="c1" width="800" height="500"></canvas>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0px;padding:0px;list-style:none;}
+body{background:#000;}
+div{width:100%;height:140px;margin:250px auto;position:relative;}
+ul{position:absolute;}
+ul li{width:210px;height:140px;float:left;position:relative;}
+ul li img{width:100%;height:100%;}
+</style>
+<script>
+window.onload=function(){
+	var oDiv=document.getElementsByTagName('div')[0];
+	var oUl=document.getElementsByTagName('ul')[0];
+	var aLi=oUl.children;
+	var aImg=oUl.getElementsByTagName('img');
+	
+	oUl.style.width=aLi[0].offsetWidth*aLi.length+'px';
+	oUl.onmousedown=function(ev){
+		var ev=ev||event;
+		disX=ev.clientX-oUl.offsetLeft;
+		document.onmousemove=function(ev){
+			var ev=ev||event;
+			var l=ev.clientX-disX;
+			if(l>oDiv.offsetWidth/2-0.5*aLi[0].offsetWidth){
+				l=oDiv.offsetWidth/2-0.5*aLi[0].offsetWidth;
+			}else if(l<oDiv.offsetWidth/2-(aLi.length-0.5)*aLi[0].offsetWidth){
+				l=oDiv.offsetWidth/2-(aLi.length-0.5)*aLi[0].offsetWidth;
+			}
+			oUl.style.left=l+'px';
+			setSize();
+		};
+		document.onmouseup=function(){
+			document.onmousemove=document.onmouseup=null;
+			oUl.releaseCapture&&oUl.releaseCapture();
+		};
+		oUl.setCapture&&oUl.setCapture();
+		return false;
+	};
+	
+	
+	function setSize(){
+		for(var i=0;i<aLi.length;i++){
+			var dis=oDiv.offsetWidth/2-(oUl.offsetLeft+aLi[i].offsetLeft+aLi[0].offsetWidth/2);
+			dis=Math.abs(dis);
+			var scale=1-dis/800;
+			if(scale<0.5){
+				scale=0.5;
+			}
+			aImg[i].style.width=420*scale+'px';
+			aImg[i].style.height=280*scale+'px';
+			aImg[i].style.marginLeft=-(aImg[i].offsetWidth-aLi[i].offsetWidth)/2+'px';
+			aImg[i].style.marginTop=-(aImg[i].offsetHeight-aLi[i].offsetHeight)/2+'px';			
+			aLi[i].style.zIndex=parseInt(scale*10000);
+			aLi[i].style.opacity=scale;
+			aLi[i].style.filter='alpha(opacity:'+scale*100+')';
+		}
+	};
+	setCenter(2);
+	setSize();
+	
+	function setCenter(n){
+		oUl.style.left=oDiv.offsetWidth/2-(n+0.5)*aLi[0].offsetWidth+'px';	
+	}
+	
+	window.onresize=setSize;
+
+};
+</script>
+</head>
+
+<body>
+<div>
+    <ul>
+        <li style="z-index:100"><img src="dragImg/drag1.jpg" alt="星球图片"/></li>
+        <li><img src="dragImg/drag2.jpg" alt="星球图片"/></li>
+        <li><img src="dragImg/drag3.jpg" alt="星球图片"/></li>
+        <li><img src="dragImg/drag4.jpg" alt="星球图片"/></li>
+        <li><img src="dragImg/drag5.jpg" alt="星球图片"/></li>
+        <li><img src="dragImg/drag6.jpg" alt="星球图片"/></li>
+    </ul>
+</div>
+</body>
+</html>

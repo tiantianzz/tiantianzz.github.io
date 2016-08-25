@@ -1,0 +1,186 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0;}
+body{overflow:hidden;}
+.img{width:700px; height:400px; margin:100px auto; position:relative; background:url(img/1.jpg) no-repeat;}
+.img .page1{position:absolute; right:0; top:0; width:50%; height:100%; -webkit-transform-style:preserve-3d; -ms-transform-style:preserve-3d; transform-style:preserve-3d;-webkit-transform:perspective(800px) rotateY(0deg);
+-ms-transform:perspective(800px) rotateY(0deg);transform:perspective(800px) rotateY(0deg); -webkit-transform-origin:left; -ms-transform-origin:left;transform-origin:left;z-index:2;}
+.page1 div{position:absolute; top:0; left:0; width:100%; height:100%;}
+.page1 .front{ -webkit-transform:translateZ(1px);-ms-transform:translateZ(1px);transform:translateZ(1px);}
+.page1 .back{ -webkit-transform:translateZ(-1px) scale(-1,1);-ms-transform:translateZ(-1px) scale(-1,1);transform:translateZ(-1px) scale(-1,1);}
+.img .page2{position:absolute; right:0; top:0; width:50%; height:100%; z-index:1;}
+.img span{position:absolute; top:0; left:0; -ms-transform:perspective(800px) translate(0px,0px) rotateY(0deg) rotateX(0deg) scale(1,1);
+-webkit-transform:perspective(800px) translate(0px,0px) rotateY(0deg) rotateX(0deg) scale(1,1);transform:perspective(800px) translate(0px,0px) rotateY(0deg) rotateX(0deg) scale(1,1);
+-webkit-transform-style:preserve-3d;-ms-transform-style:preserve-3d;transform-style:preserve-3d;}
+span em{position:absolute; top:0; left:0; width:100%; height:100%;}
+.btn{position:absolute; top:50px; left:0; padding-left:500px; }
+a{text-decoration:none; color:#fff;width:100px; height:40px; text-align:center; line-height:40px; font-size:20px; font-weight:bold; display:inline-block; box-shadow:0 4px 4px #000; margin-right:20px;}
+.bom{ background:#F03; }
+.flip{ background:#0F0; }
+.page{ background:#03C; }
+a:active{-webkit-transform:translate(0px,4px);-ms-transform:translate(0px,4px);transform:translate(0px,4px);box-shadow:0 0px 4px #000;}
+</style>
+<script>
+function rnd(n,m){
+	return Math.floor(Math.random()*(m-n)+n);
+}
+window.onload=function(){
+	var oDiv=document.querySelector('.img');	
+	var oA1=document.querySelectorAll('.btn a')[0];	
+	var oA2=document.querySelectorAll('.btn a')[1];	
+	var oA3=document.querySelectorAll('.btn a')[2];	
+	var bOk=false;
+	var iNow=0;
+	oA1.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		oDiv.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat';
+		var R = 4;
+		var C = 7;
+		for(var i=0;i<R;i++){
+			for(var j=0;j<C;j++){
+				var oS = document.createElement('span');
+				oS.style.width = oDiv.offsetWidth/C+'px';
+				oS.style.height = oDiv.offsetHeight/R+'px';
+				oDiv.appendChild(oS);
+				oS.style.left = j*oS.offsetWidth+'px';
+				oS.style.top = i*oS.offsetHeight+'px';
+				oS.style.background='url(img/'+(iNow%3+1)+'.jpg) '+-j*(oDiv.offsetWidth/C)+'px '+-i*(oDiv.offsetHeight/R)+'px';
+			}
+		}
+		var aS = oDiv.children;
+		for(var i=0;i<aS.length;i++){
+			aS[i].style.WebkitTransition = '0.5s all ease';
+			aS[i].style.msTransition = '0.5s all ease';
+			aS[i].style.transition = '0.5s all ease';
+			var x = (aS[i].offsetLeft+aS[i].offsetWidth/2)-oDiv.offsetWidth/2;
+			var y = (aS[i].offsetTop+aS[i].offsetHeight/2)-oDiv.offsetHeight/2;
+			aS[i].style.WebkitTransform = 'perspective(800px) translate('+x+'px,'+y+'px) rotateY('+rnd(-180,180)+'deg) rotateX('+rnd(-180,180)+'deg) scale('+rnd(1,3)+','+rnd(1,3)+')';
+			aS[i].style.msTransform = 'perspective(800px) translate('+x+'px,'+y+'px) rotateY('+rnd(-180,180)+'deg) rotateX('+rnd(-180,180)+'deg) scale('+rnd(1,3)+','+rnd(1,3)+')';
+			aS[i].style.transform = 'perspective(800px) translate('+x+'px,'+y+'px) rotateY('+rnd(-180,180)+'deg) rotateX('+rnd(-180,180)+'deg) scale('+rnd(1,3)+','+rnd(1,3)+')';
+			aS[i].style.opacity = 0;
+		}
+		aS[aS.length-1].addEventListener('transitionend',tranEnd,false);
+		function tranEnd(){
+			aS[aS.length-1].removeEventListener('transitionend',tranEnd,false);
+			for(var i=0;i<aS.length;i++){
+				oS.style.WebkitTransition='none';
+				oS.style.msTransition='none';
+				oS.style.transition='none';
+			}
+			oDiv.innerHTML='';
+			bOk = false;
+		}
+		iNow++;
+	};
+	oA2.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		oDiv.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat';
+		var R = 4;
+		var C = 7;
+		for(var i=0;i<R;i++){
+			for(var j=0;j<C;j++){
+				var oS = document.createElement('span');
+				oS.style.width = oDiv.offsetWidth/C+'px';
+				oS.style.height = oDiv.offsetHeight/R+'px';
+				oS.innerHTML = '<em class="front"></em><em class="back"></em>';
+				oDiv.appendChild(oS);
+				oS.style.left = j*oS.offsetWidth+'px';
+				oS.style.top = i*oS.offsetHeight+'px';
+				var oFront = oS.children[0];
+				var oBack = oS.children[1];
+				oFront.style.background='url(img/'+(iNow%3+1)+'.jpg) '+-j*oS.offsetWidth+'px '+-i*oS.offsetHeight+'px';
+				oBack.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) '+-j*oS.offsetWidth+'px '+-i*oS.offsetHeight+'px';
+				oFront.style.WebkitTransform='translateZ(1px)';
+				oFront.style.msTransform='translateZ(1px)';
+				oFront.style.transform='translateZ(1px)';
+				oBack.style.WebkitTransform='translateZ(-1px) scale(-1,1)';
+				oBack.style.msTransform='translateZ(-1px) scale(-1,1)';
+				oBack.style.transform='translateZ(-1px) scale(-1,1)';
+				oS.r = i;
+				oS.c = j;
+			}
+		}
+		var aS = oDiv.children;
+		for(var i=0;i<aS.length;i++){
+			aS[i].style.WebkitTransition = '1s all ease';
+			(function(index){
+				setTimeout(function(){
+					aS[index].style.WebkitTransform = 'perspective(800px) rotateY(180deg)';
+				},(aS[i].r+aS[i].c)*100);
+			})(i);
+		}
+		aS[aS.length-1].addEventListener('transitionend',tranEnd,false);
+		function tranEnd(){
+			aS[aS.length-1].removeEventListener('transitionend',tranEnd,false);
+			for(var i=0;i<aS.length;i++){
+				oS.style.WebkitTransition='none';
+				oS.style.msTransition='none';
+				oS.style.transition='none';
+			}
+			oDiv.innerHTML='';
+			bOk = false;
+		}
+		iNow++;
+	};
+	oA3.onclick=function(){
+		if(bOk)return;
+		bOk=true;
+		var n=2;
+		oDiv.style.background='url(img/'+(iNow%3+1)+'.jpg) no-repeat';
+		for(var i=0;i<n;i++){
+			var oBox=document.createElement('div');
+			oDiv.appendChild(oBox);
+		}
+		var aDiv=oDiv.children;
+		oDiv.children[0].className='page1';
+		oDiv.children[1].className='page2';
+		aDiv[0].innerHTML='<div class="front"></div><div class="back"></div>';
+		var oFront = aDiv[0].children[0];
+		var oBack = aDiv[0].children[1];
+		var oPage1=aDiv[0];
+		var oPage2=aDiv[1];
+		oFront.style.background='url(img/'+(iNow%3+1)+'.jpg) no-repeat right';
+		oBack.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat';
+		oPage2.style.background='url(img/'+((iNow+1)%3+1)+'.jpg) no-repeat right';
+		
+		oPage1.style.WebkitTransition = '3s all ease';
+		oPage1.style.msTransition = '1s all ease';
+		oPage1.style.transition = '1s all ease';
+		setTimeout(function(){
+			oPage1.style.WebkitTransform = 'perspective(800px) rotateY(-180deg)';
+			oPage1.style.msTransform = 'perspective(800px) rotateY(-180deg)';
+			oPage1.style.transform = 'perspective(800px) rotateY(-180deg)';	
+		},2);
+		oPage1.addEventListener('transitionend',tranEnd,false);
+		function tranEnd(){
+			oPage1.removeEventListener('transitionend',tranEnd,false);
+			oPage1.style.WebkitTransition='none';
+			oPage1.style.msTransition='none';
+			oPage1.style.transition='none';
+			oDiv.style.background='url(img/'+(iNow%3+1)+'.jpg) no-repeat';
+			oDiv.innerHTML='';
+			bOk = false;
+		}
+		iNow++;					
+	}
+};
+</script>
+</head>
+
+<body>
+<div class="img">
+</div>
+<div class="btn">
+    <a href="javascript:;" class="bom">爆炸</a>
+    <a href="javascript:;" class="flip">翻转</a>
+    <a href="javascript:;" class="page">翻页</a>
+</div>
+
+</body>
+</html>

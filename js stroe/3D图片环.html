@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+*{margin:0; padding:0; list-style:none;}
+body{background:#000; overflow:hidden;}
+ul{width:133px; height:200px; margin:200px auto; position:relative; -webkit-transform-style:preserve-3d;transform-style:preserve-3d;
+-webkit-transform:perspective(800px) rotateX(0) rotateY(0);transform:perspective(800px) rotateX(0) rotateY(0);}
+ul li{width:133px; height:200px; position:absolute; top:0; left:0; -webkit-transform: rotateY(0deg) translateZ(0px);
+transform: rotateY(0deg) translateZ(0px);border-radius:15px; overflow:hidden; box-shadow:0px 0px 20px #fff;}
+</style>
+<script>
+window.onload=function(){
+	var oUl = document.querySelector('ul');
+	var aLi = document.querySelectorAll('ul li');
+	for(var i=0;i<aLi.length;i++){
+		aLi[i].style.WebkitTransition = '1s all ease '+(11-i)*100+'ms';
+		aLi[i].style.transition = '1s all ease '+(11-i)*100+'ms';
+		aLi[i].style.WebkitTransform = 'rotateY('+i*360/11+'deg) translateZ(350px)';
+		aLi[i].style.transform = 'rotateY('+i*360/11+'deg) translateZ(350px)';
+	}
+	var x = 0;
+	var y = 0;
+	var iSpeedX = 0;
+	var iSpeedY = 0;
+	var lastX = 0;
+	var lastY = 0;
+	var timer=null;
+	var bOk = false;
+	function tranEnd(){
+		aLi[0].removeEventListener('transitionend',tranEnd,false);
+		bOk = true;
+	}
+	aLi[0].addEventListener('transitionend',tranEnd,false);
+	oUl.onmousedown=function(ev){
+		if(!bOk)return;
+		var disX = ev.pageX-y;
+		var disY = ev.pageY-x;
+		clearInterval(timer);
+		document.onmousemove=function(ev){
+			x = ev.pageY-disY;
+			y = ev.pageX-disX;
+			oUl.style.WebkitTransform = 'perspective(800px) rotateX('+-x/5+'deg) rotateY('+y/5+'deg)';
+			oUl.style.transform = 'perspective(800px) rotateX('+-x/5+'deg) rotateY('+y/5+'deg)';
+			iSpeedX = ev.pageX-lastX;
+			iSpeedY = ev.pageY-lastY;			
+			lastX = ev.pageX;
+			lastY = ev.pageY;
+		};
+		document.onmouseup=function(){
+			document.onmousemove=null;
+			document.onmouseup=null;
+			clearInterval(timer);
+			timer = setInterval(function(){
+				iSpeedX*=0.95;
+				iSpeedY*=0.95;
+				x += iSpeedY;
+				y += iSpeedX;
+				oUl.style.WebkitTransform = 'perspective(800px) rotateX('+-x/5+'deg) rotateY('+y/5+'deg)';
+				oUl.style.transform = 'perspective(800px) rotateX('+-x/5+'deg) rotateY('+y/5+'deg)';				
+				if(Math.abs(iSpeedX)<1)iSpeedX=0;
+				if(Math.abs(iSpeedY)<1)iSpeedY=0;
+				if(iSpeedX==0&&iSpeedY==0){
+					clearInterval(timer);
+				}
+			},30);
+		}
+		return false;
+	};
+};
+</script>
+</head>
+
+<body>
+<ul>
+	<li><img src="3D/1.jpg" /></li>
+	<li><img src="3D/2.jpg" /></li>
+	<li><img src="3D/3.jpg" /></li>
+	<li><img src="3D/4.jpg" /></li>
+	<li><img src="3D/5.jpg" /></li>
+	<li><img src="3D/6.jpg" /></li>
+	<li><img src="3D/7.jpg" /></li>
+	<li><img src="3D/8.jpg" /></li>
+	<li><img src="3D/9.jpg" /></li>
+	<li><img src="3D/10.jpg" /></li>
+	<li><img src="3D/11.jpg" /></li>
+</ul>
+</body>
+</html>

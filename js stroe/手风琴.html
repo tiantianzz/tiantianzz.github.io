@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style>
+body{background:#000;}
+#box{width:930px;height:305px;position:relative;margin:100px auto;overflow:hidden;}
+#box div{width:840px;height:305px;position:absolute;left:0px;top:0px;}
+</style>
+<script src="../js/move.js"></script>
+<script>
+window.onload=function(){
+	var oDiv=document.getElementById('box');
+	var aDiv=oDiv.children;
+	for(var i=0;i<aDiv.length;i++){
+		aDiv[i].style.left=i*30+'px';
+	}
+	for(var i=0;i<aDiv.length;i++){
+		(function(index){
+			aDiv[i].onmouseover=function(){
+				for(var i=0;i<aDiv.length;i++){
+					if(i<=index){
+						move(aDiv[i],{left:i*30},{duration:700});
+					}else if(i>index){
+						move(aDiv[i],{left:840+(i-1)*30},{duration:700});
+					}
+				}
+			};
+		})(i);
+	}
+};
+</script>
+</head>
+
+<body>
+<div id="box">
+	<div><img src="accordion/0.jpg" alt="手风琴图片"/></div>
+    <div><img src="accordion/1.jpg" alt="手风琴图片"/></div>
+    <div><img src="accordion/2.jpg" alt="手风琴图片"/></div>
+    <div><img src="accordion/3.jpg" alt="手风琴图片"/></div>
+</div>
+</body>
+</html>
